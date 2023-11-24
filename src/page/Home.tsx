@@ -17,8 +17,11 @@ interface ProductType {
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const [amount, setAmount] = useState(0);
-  const [currentProduct, setCurrentProduct] = useState(0);
+  
+  const { cartProducts } = useSelector(
+    (state: any) => state.cartReducer
+  );
+  
 
   useEffect(() => {
     dispatch(getProducts());
@@ -30,45 +33,26 @@ const Home = () => {
 
   //* Add to cart function
   const addHandler = (item: ProductType) => {
-    if (currentProduct !== item.id) {
-      setCurrentProduct(item.id);
-      setAmount(1);
-      dispatch(
-        addToCart({
-          id: item.id,
-          price: Math.floor(item.price),
-          amount: 1,
-          totalPrice: item.price,
-          image: item.image,
-          category: item.category,
-        })
+    dispatch(
+      addToCart({
+        id: item.id,
+        price: Math.floor(item.price),
+        totalPrice: item.price,
+        image: item.image,
+        category: item.category,
+      })
       );
-    } else {
-      setCurrentProduct(item.id);
-      setAmount((prevAmount) => prevAmount + 1);
-      dispatch(
-        addToCart({
-          id: item.id,
-          price: Math.floor(item.price),
-          amount: amount + 1,
-          totalPrice: item.price,
-          image: item.image,
-          category: item.category,
-        })
-      );
-    }
+   
   };
 
   //* Remove from cart function
   const removeHanlder = (item: ProductType) => {
-    if (amount !== 0) {
-      setCurrentProduct(item.id);
-      setAmount((prevAmount) => prevAmount - 1);
+    const cartItem = cartProducts.find((cartItem: any) => cartItem.id === item.id);
+    if(cartItem?.amount>0){
       dispatch(
         removeFromCart({
           id: item.id,
           price: Math.floor(item.price),
-          amount: amount - 1,
           totalPrice: item.price,
           image: item.image,
           category: item.category,
@@ -88,8 +72,7 @@ const Home = () => {
         ) : (
           <ProductList
             data={products}
-            currentProduct={currentProduct}
-            amount={amount}
+            
             addHandler={addHandler}
             removeHandler={removeHanlder}
           />

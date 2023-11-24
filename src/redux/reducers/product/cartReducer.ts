@@ -3,7 +3,7 @@ import { ProductAction } from "../../types/actionTypes/productActions";
 import { CartProduct, CartState } from "../../types/stateTypes";
 
 const initialState: CartState = {
-  cartProducts: [],
+    cartProducts: [],
   totalProducts: 0,
   totalAmount: 0,
 };
@@ -13,7 +13,7 @@ export const cartReducer = (
   action: ProductAction
 ): CartState => {
   switch (action.type) {
-    case ActionType.ADD_TO_CART:
+        case ActionType.ADD_TO_CART:
       const existingProduct = state.cartProducts.find(
         (item) => item.id === action.payload.id
       );
@@ -40,7 +40,7 @@ export const cartReducer = (
         const newCartProduct = {
           id: action.payload.id,
           price: action.payload.price,
-          amount: action.payload.amount,
+          amount: 1,
           totalPrice: action.payload.price,
           image: action.payload.image,
           category: action.payload.category,

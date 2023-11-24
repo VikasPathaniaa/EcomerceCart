@@ -1,7 +1,7 @@
 export interface CartProduct {
     id: number;
     price: number;
-    amount: number;
+    amount?: any;
     totalPrice: number;
     image: string;
     category: string;

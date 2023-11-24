@@ -42,7 +42,7 @@ const Cart = () => {
       <Header />
       {cartProducts.length === 0 ? (
         <div className="flex items-center h-[100vh] justify-center">
-          <p>Your Cart Bag is Empty</p>
+          <p>Your Cart Bag is Empty Please Add Product in your Cart</p>
         </div>
       ) : (
         <>
